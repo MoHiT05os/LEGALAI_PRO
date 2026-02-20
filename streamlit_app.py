@@ -146,11 +146,8 @@ html, body, [data-testid="stAppViewContainer"], .stApp {
 from src.index import load_chroma
 from src.prompts import PROMPT_TEMPLATE
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
-try:
-    from langchain.chains import RetrievalQA
-except ImportError:
-    from langchain_community.chains import RetrievalQA
 
 @st.cache_resource
 def build_qa_chain():
