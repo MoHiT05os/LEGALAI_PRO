@@ -189,9 +189,14 @@ def build_qa_chain():
     )
 
 def ask(question: str):
-    qa = build_qa_chain()
-    response = qa.invoke({"query": question})
-    return response.get("result"), response.get("source_documents", [])
+    try:
+        qa = build_qa_chain()
+        response = qa.invoke({"query": question})
+        return response.get("result"), response.get("source_documents", [])
+    except Exception as e:
+        error_msg = f"An error occurred: {str(e)}"
+        st.error(error_msg)
+        return "I encountered an error while processing your request. Please check the error message above.", []
 
 def clean_response(text: str) -> str:
     text = text or ""
