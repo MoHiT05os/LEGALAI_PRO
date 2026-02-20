@@ -153,7 +153,7 @@ from langchain_core.prompts import PromptTemplate
 def build_qa_chain():
     db = load_chroma(collection_name="legal", persist_directory=Path.cwd() / "chroma_db")
     retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 4})
-    llm = ChatGoogleGenerativeAI(model="gemini-flash-latest", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="models/gemini-1.5-flash", temperature=0.0)
     prompt = PromptTemplate(input_variables=["context", "question"], template=PROMPT_TEMPLATE)
     return RetrievalQA.from_chain_type(
         llm=llm,
