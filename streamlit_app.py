@@ -143,6 +143,18 @@ html, body, [data-testid="stAppViewContainer"], .stApp {
     unsafe_allow_html=True,
 )
 
+# --- API KEY HANDLING FOR CLOUD DEPLOYMENT ---
+try:
+    if "GOOGLE_API_KEY" in st.secrets:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+except FileNotFoundError:
+    pass 
+
+if not os.getenv("GOOGLE_API_KEY"):
+    st.error("🚨 Error: GOOGLE_API_KEY is missing! Please add it to Streamlit Secrets.")
+    st.stop()
+# ---------------------------------------------
+
 from src.index import load_chroma
 from src.prompts import PROMPT_TEMPLATE
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -159,10 +171,11 @@ from langchain_core.prompts import PromptTemplate
 def build_qa_chain():
     db = load_chroma(collection_name="legal", persist_directory=Path.cwd() / "chroma_db")
     retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 4})
+    # API Key is now guaranteed to be in os.environ["GOOGLE_API_KEY"]
     llm = ChatGoogleGenerativeAI(
         model="gemini-1.5-flash",
         temperature=0.0,
-        google_api_key=os.getenv("GOOGLE_API_KEY")
+        # google_api_key is automatically read from os.environ by the library
     )
     prompt = PromptTemplate(input_variables=["context", "question"], template=PROMPT_TEMPLATE)
     return RetrievalQA.from_chain_type(
