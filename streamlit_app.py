@@ -147,7 +147,7 @@ from src.index import load_chroma
 from src.prompts import PROMPT_TEMPLATE
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
-from langchain_classic.chains import RetrievalQA
+from langchain.chains import RetrievalQA
 
 @st.cache_resource
 def build_qa_chain():
