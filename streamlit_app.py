@@ -173,7 +173,7 @@ def build_qa_chain():
     retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 4})
     # API Key is now guaranteed to be in os.environ["GOOGLE_API_KEY"]
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash-preview-04-17",
         temperature=0.0,
         # google_api_key is automatically read from os.environ by the library
     )
