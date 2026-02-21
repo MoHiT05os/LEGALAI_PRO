@@ -26,7 +26,7 @@ def build_qa_chain():
     )
 
     llm = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash-001",
+        model="gemini-2.0-flash",
         temperature=0,
     )
 

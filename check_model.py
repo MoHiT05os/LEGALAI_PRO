@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-target_model = "gemini-1.5-flash-latest"
+target_model = "gemini-2.0-flash"
 found = False
 print("Checking for model:", target_model)
 try:
